@@ -1,0 +1,24 @@
+﻿@model  List<Q3.Industro.ModelLayer.Models.Teams.TeamInformation>
+
+@foreach (var item in Model.Where(x => x.teamShow == true))
+{
+    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="(@item.teamDuration)s">
+        <div class="team-item">
+            <img class="img-fluid" src="@item.teamImgUrl" alt="">
+            <div class="d-flex">
+                <div class="flex-shrink-0 btn-square bg-primary" style="width: 90px; height: 90px;">
+                    <i class="fa fa-2x fa-share text-white"></i>
+                </div>
+                <div class="position-relative overflow-hidden bg-light d-flex flex-column justify-content-center w-100 ps-4" style="height: 90px;">
+                    <h5>@item.teamMember</h5>
+                    <span class="text-primary">@item.teamPosition</span>
+                    <div class="team-social">
+                        <a class="btn btn-square btn-dark rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square btn-dark rounded-circle mx-1" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square btn-dark rounded-circle mx-1" href=""><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

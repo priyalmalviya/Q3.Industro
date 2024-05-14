@@ -1,0 +1,139 @@
+﻿@model Q3.Industro.ModelLayer.Models.Services.ServiceInformation
+@{
+    ViewBag.Title = "EditServices";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top py-0 pe-5">
+    <a href="@Url.Action("Index","Home")" class="navbar-brand ps-5 me-0">
+        <h1 class="text-white m-0">Industro</h1>
+    </a>
+    <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+             
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Teams</a>
+                <div class="dropdown-menu bg-light m-0">
+                    <a href="@Url.Action("AllTeams","Admin")" class="dropdown-item">All Team</a>
+                    <a href="@Url.Action("AddTeam","Admin")" class="dropdown-item">Add Team</a>
+                </div>
+            </div>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Projects</a>
+                <div class="dropdown-menu bg-light m-0">
+                    <a href="@Url.Action("AllProjects","Admin")" class="dropdown-item">All Projects</a>
+                    <a href="@Url.Action("AddProject","Admin")" class="dropdown-item">Add Projects</a>
+                </div>
+            </div>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Services</a>
+                <div class="dropdown-menu bg-light m-0">
+                    <a href="@Url.Action("AllServices","Admin")" class="dropdown-item">All Services</a>
+                    <a href="@Url.Action("AddService","Admin")" class="dropdown-item">Add Services</a>
+                </div>
+            </div>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Testimonials</a>
+                <div class="dropdown-menu bg-light m-0">
+                    <a href="@Url.Action("AllTestimonials","Admin")" class="dropdown-item">All Testimonials</a>
+                    <a href="@Url.Action("AddTestimonial","Admin")" class="dropdown-item">Add Testimonials</a>
+                </div>
+            </div>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Welcome @Session["Username"]!</a>
+                <div class="dropdown-menu bg-light m-0">
+                    <a href="@Url.Action("Index","Home")" class="dropdown-item">LogOut</a>
+                    <a href="#" class="dropdown-item">Profite</a>
+
+                </div>
+            </div>
+        </div>
+        @*<a href="" class="btn btn-primary px-3 d-none d-lg-block">Get A Quote</a>*@
+    </div>
+</nav>
+<!-- Navbar End -->
+<!-- Main Body Start-->
+<div class="container" data-wow-delay="0.5s" style="padding:100px">
+    <form>
+        <div class="row g-3">
+            <div class="col-md-12">
+                <div class="form-floating">
+                    <input type="text" class="form-control ServiceName" id="name"  value="@Model.ServiceName" placeholder="Service Name">
+                    <label for="name">Service Name</label>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-floating">
+                    <input type="date" class="form-control ServiceDate" id="date"  value="@Model.ServiceDate" placeholder="Service Date">
+                    <label for="date">Service Date</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div>
+                    <label for="avatar">Service Picture:</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input class="Serviceimg" type="file" id="avatar" name="avatar"  value="@Model.ServiceImgUrl" accept="image/png, image/jpeg, image/jpg" />
+                </div>
+            </div>
+            @*<div class="col-12">
+                    <div class="form-floating">
+                        <input type="text" class="form-control ClientProf" id="subject" placeholder="Subject">
+                        <label for="subject">Your Profession</label>
+                    </div>
+                </div>*@
+            <div class="col-12">
+                <div class="form-floating">
+                    <textarea class="form-control ServiceAbout" placeholder="Leave a message here" id="message" style="height: 150px">@Model.ServiceDesc</textarea>
+                    <label for="message">About Service</label>
+                </div>
+            </div>
+            <div class="col-12">
+                <input type="hidden" id="htnidService" value="@Model.ServiceId" />
+                <button class="btn btn-primary py-3 px-5" id="EditService" type="button">Update</button>
+                <label style="color:darkorange;font-size:18px;" id="lblresponseServiceEdit"></label>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Main Body End-->
+@section customscript{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#EditService').on('click', function () {
+                $('#lblresponseServiceEdit').val('');
+                $('#EditService').text('Please wait...');
+                var name = $(".ServiceName").val();
+                var date = $(".ServiceDate").val();
+                // var img = $(".ServiceImg").attr("src", result.imageUrl);
+                var about = $(".ServiceAbout").val();
+                var serviceForm = new Object();
+                serviceForm.NameService = name;
+                serviceForm.DateService = date;
+                //serviceForm.ImgUrlService = img;
+                serviceForm.DescService = about;
+                serviceForm.IdService = $("#htnidService").val();
+                $.ajax({
+                    type: "POST",
+                    url: "../../Admin/EditServices",
+                    data: JSON.stringify({ "serviceForm": serviceForm }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        $('#EditService').text('Updated');
+                        $('#lblresponseServiceEdit').text(response.responsetext);
+                    },
+                    error: function (response) {
+                        console.log('error');
+                    }
+                });
+            });
+        });
+    </script>
+}

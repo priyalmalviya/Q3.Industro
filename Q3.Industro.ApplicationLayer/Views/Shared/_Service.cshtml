@@ -1,0 +1,24 @@
+﻿@model  List<Q3.Industro.ModelLayer.Models.Services.ServiceInformation>
+
+@foreach (var item in Model.Where(x=>x.ServiceShow==true))
+{
+    <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.5s">
+        <div class="service-item">
+            <img class="img-fluid" src="@item.ServiceImgUrl" alt="">
+            <div class="service-img">
+                <img class="img-fluid" src="@item.ServiceImgUrl" alt="">
+            </div>
+            <div class="service-detail">
+                <div class="service-title">
+                    <hr class="w-25">
+                    <h3 class="mb-0">@item.ServiceName</h3>
+                    <hr class="w-25">
+                </div>
+                <div class="service-text">
+                    <p class="text-white mb-0">@item.ServiceDesc</p>
+                </div>
+            </div>
+            <a class="btn btn-light" href="~/Home/ServiceMore?id=@item.ServiceId">Read More</a>
+        </div>
+    </div>
+}

@@ -1,0 +1,11 @@
+﻿@model  List<Q3.Industro.ModelLayer.Models.Projects.ProjectInformation>
+
+@foreach (var item in Model.Where(x => x.ProjectShow == true))
+{
+    <a class="project-item" href="">
+        <img class="img-fluid" src="@item.ProjectImgUrl" alt="">
+        <div class="project-title">
+            <h5 class="text-primary mb-0">@item.ProjectName</h5>
+        </div>
+    </a>
+}

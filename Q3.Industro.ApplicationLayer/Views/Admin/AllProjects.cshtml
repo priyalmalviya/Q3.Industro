@@ -1,0 +1,105 @@
+﻿@model List<Q3.Industro.ModelLayer.Models.Projects.ProjectInformation>
+@{
+    ViewBag.Title = "AllProjects";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top py-0 pe-5">
+    <a href="@Url.Action("Index","Home")" class="navbar-brand ps-5 me-0">
+        <h1 class="text-white m-0">Industro</h1>
+    </a>
+    <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+             
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Teams</a>
+                <div class="dropdown-menu bg-light m-0">
+                    <a href="@Url.Action("AllTeams","Admin")" class="dropdown-item">All Teams</a>
+                    <a href="@Url.Action("AddTeam","Admin")" class="dropdown-item">Add Team</a>
+                </div>
+            </div>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Projects</a>
+                <div class="dropdown-menu bg-light m-0">
+                    <a href="@Url.Action("AllProjects","Admin")" class="dropdown-item">All Projects</a>
+                    <a href="@Url.Action("AddProject","Admin")" class="dropdown-item">Add Projects</a>
+                </div>
+            </div>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Services</a>
+                <div class="dropdown-menu bg-light m-0">
+                    <a href="@Url.Action("AllServices","Admin")" class="dropdown-item">All Services</a>
+                    <a href="@Url.Action("AddService","Admin")" class="dropdown-item">Add Services</a>
+                </div>
+            </div>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Testimonials</a>
+                <div class="dropdown-menu bg-light m-0">
+                    <a href="@Url.Action("AllTestimonials","Admin")" class="dropdown-item">All Testimonials</a>
+                    <a href="@Url.Action("AddTestimonial","Admin")" class="dropdown-item">Add Testimonials</a>
+                </div>
+            </div>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Welcome @Session["Username"]!</a>
+                <div class="dropdown-menu bg-light m-0">
+                    <a href="@Url.Action("Index","Home")" class="dropdown-item">LogOut</a>
+                    <a href="#" class="dropdown-item">Profite</a>
+
+                </div>
+            </div>
+        </div>
+        @*<a href="" class="btn btn-primary px-3 d-none d-lg-block">Get A Quote</a>*@
+    </div>
+</nav>
+<!-- Navbar End -->
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <h1 class="display-3 text-white animated slideInRight">All Projects</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb animated slideInRight mb-0">
+                <li class="breadcrumb-item"><a href="#">Admin</a></li>
+                <li class="breadcrumb-item"><a href="#">Project</a></li>
+                <li class="breadcrumb-item active" aria-current="page">All Project</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<!-- Page Header End -->
+<!--Main Body Start-->
+<div class="container-fluid">
+    <div class="table-responsive table-wrapper">
+        <!--Table-->
+        <table class="table table-striped">
+            <thead style="background-color: #002d72;">
+                <tr>
+                    <th scope="col">Project Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">About</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Where(x => x.ProjectShow == true))
+                {
+                    <tr>
+                        <td>@item.Projectid</td>
+                        <td>@item.ProjectName</td>
+                        <td>@item.ProjectDate.Date.ToString("dd/MM/yyyy")</td>
+                        <td>@item.ProjectAbout</td>
+                        <td>
+                            <a href="@Url.Action("EditProjects","Admin",new {id= item.Projectid })" class="btn"><i class="bi bi-pencil"></i>edit</a>
+                            <a href="@Url.Action("DeleteProject","Admin",new {id= item.Projectid })" class="btn"><i class="bi bi-trash"></i>delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--Main Body End-->
